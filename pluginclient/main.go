@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"log"
 	"plugin"
+
+	"github.com/WilliamMortl/GoTestPlugin/plugincommon"
 )
 
 const plugin_name string = "pluginserver.so"
@@ -32,8 +34,9 @@ func main() {
 		panic(err)
 	}
 	var callbackFunctions Callbacks
-	numberOut, messageOut := funcCallbackTest.(func(CallbackFunctions, int) (int, string))(callbackFunctions, 4)
-	log.Print(fmt.Sprintf("Plugin client received this: %s", messageOut))
+	numberOut, messageOut := funcCallbackTest.(func(plugincommon.CallbackFunctions, int, string) (int, string))(callbackFunctions, 4)
+	log.Print(fmt.Sprintf("Callback test returned number: %d", numberOut))
+	log.Print(fmt.Sprintf("Callback test returned string: %s", messageOut))
 }
 
 func (c *Callbacks) AddOne(val int) int {
@@ -43,6 +46,6 @@ func (c *Callbacks) AddOne(val int) int {
 
 func (c *Callbacks) AddMessage(message string) string {
 	var messageOut string = fmt.Sprintf("%s - got it in AddMessage", message)
-	log.Print(messageOut)
+	log.Print("Called AddMessage in pluginclient %s", messageOut)
 	return messageOut
 }

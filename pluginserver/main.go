@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"log"
+
+	"github.com/WilliamMortl/GoTestPlugin/plugincommon"
 )
 
 // Main function
@@ -20,9 +22,7 @@ func SimpleTest(message string) string {
 }
 
 // accepts a callback function and a string to pass to the callback
-/*func CallbackTest(long (*callback) (char* string), char* stringToPass) long
-{
-    printf("callback test input: %s\r\n", stringToPass);
-    fflush(stdout);
-    return (*callback)(stringToPass);
-}*/
+func CallbackTest(callbacks plugincommon.CallbackFunctions, val int, message string) (int, string) {
+	log.Print("CallbackTest called")
+	return callbacks.AddOne(val), callbacks.AddMessage(message)
+}
