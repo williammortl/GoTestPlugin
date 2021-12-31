@@ -4,4 +4,4 @@ clean:
 	rm -rf *.so
 
 build: main.go
-	go build -buildmode=plugin -o plugin_server.so
+	go build -buildmode=plugin -o pluginserver.so

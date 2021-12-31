@@ -4,4 +4,4 @@ clean:
 	rm -rf *.exe
 
 build: main.go
-	go build -o plugin_client.exe
+	go build -o pluginclient.exe

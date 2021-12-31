@@ -4,22 +4,22 @@ dylib: dylib/dylib.h dylib/dylib.c
 	$(MAKE) -C dylib test
 	cp dylib/libdylib.so bin/.
 
-plugin_server: plugin_server/main.go
-	$(MAKE) -C plugin_server
-	cp plugin_server/plugin_server.so bin/.
+pluginserver: pluginserver/main.go
+	$(MAKE) -C pluginserver
+	cp pluginserver/pluginserver.so bin/.
 
-plugin_client: plugin_client/main.go
-	$(MAKE) -C plugin_client
-	cp plugin_client/plugin_client.exe bin/.
+pluginclient: pluginclient/main.go
+	$(MAKE) -C pluginclient
+	cp pluginclient/pluginclient.exe bin/.
 
 clean:
 	rm -rf bin
 	$(MAKE) -C dylib clean
-	$(MAKE) -C plugin_server clean
-	$(MAKE) -C plugin_client clean
+	$(MAKE) -C pluginserver clean
+	$(MAKE) -C pluginclient clean
 
 createdirs:
 	mkdir bin
 
-build: dylib plugin_server plugin_client
+build: dylib pluginserver pluginclient
 	ls bin
