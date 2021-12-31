@@ -1,22 +1,25 @@
-all: clean build
+all: clean createdirs build
 
-buildDylib: dylib/dylib.h dylib/dylib.c
-	$(MAKE) -C dylib
+dylib: dylib/dylib.h dylib/dylib.c
+	$(MAKE) -C dylib test
 	cp dylib/libdylib.so bin/.
 
-buildPlugin: plugin/main.go
-	$(MAKE) -C plugin
-	cp plugin/plugin bin/.
+plugin_server: plugin_server/main.go
+	$(MAKE) -C plugin_server
+	cp plugin_server/plugin_server.so bin/.
 
-buildCli: cli/main.go
-	$(MAKE) -C cli
-	cp cli/cli bin/.
+plugin_client: plugin_client/main.go
+	$(MAKE) -C plugin_client
+	cp plugin_client/plugin_client.exe bin/.
 
 clean:
 	rm -rf bin
+	$(MAKE) -C dylib clean
+	$(MAKE) -C plugin_server clean
+	$(MAKE) -C plugin_client clean
 
-createDirectories:
+createdirs:
 	mkdir bin
 
-build: createDirectories buildDylib buildPlugin buildCli
+build: dylib plugin_server plugin_client
 	ls bin

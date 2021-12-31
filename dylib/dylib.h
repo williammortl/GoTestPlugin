@@ -3,7 +3,9 @@
 
 #include <stdio.h>
 
-// exported functions
+// exported functions 
+extern void SimpleTest(char* stringToPass);
+
 extern long CallbackTest(long (*callback) (char* string), char* stringToPass);
 
 #endif
