@@ -4,15 +4,15 @@
 // simple dylib call test
 extern void SimpleTest(char* stringToPass)
 {
-    printf("simple test input: %s\r\n", stringToPass);
+    printf("SimpleTest: %s\r\n", stringToPass);
     fflush(stdout);
     return;
 }
 
 // accepts a callback function and a string to pass to the callback
-extern long CallbackTest(long (*callback) (char* string), char* stringToPass)
+extern long CallbackTest(long (*callback) (long val), long val)
 {
-    printf("callback test input: %s\r\n", stringToPass);
+    printf("CallbackTest called in dylib.c\r\n");
     fflush(stdout);
-    return (*callback)(stringToPass);
+    return (*callback)(val);
 }

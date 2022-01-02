@@ -7,13 +7,14 @@
 #define SHARED_LIBRARY "./libdylib.so"
 #define SHARED_LIBRARY_FUNCTION_SIMPLE "SimpleTest"
 #define SHARED_LIBRARY_FUNCTION_CALLBACK "CallbackTest"
-#define TEST_VALUE 4
+#define STRING_TEST_STRING "testtesttest"
+#define TEST_VALUE 1604
 
 // function types
 typedef void (SimpleTest)(char* stringToPass);
-typedef long (CallbackTest)(long (*callback)(char* string), char* stringToPass);
+typedef long (CallbackTest)(long (*callback)(long val), long val);
 
 // functions
-long Callback(char* stringToPass);
+long AddOneCallback(long val);
 
 #endif

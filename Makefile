@@ -1,22 +1,30 @@
 all: clean createdirs build
 
 dylib: dylib/dylib.h dylib/dylib.c
-	$(MAKE) -C dylib test
+	cd dylib; \
+		gcc -c -Wall -fPIC -c dylib.c; \
+		gcc -shared -o libdylib.so dylib.o; \
+		rm -rf dylib.o;\
+		gcc test.c -ldl -o testdylib.exe
 	cp dylib/libdylib.so bin/.
+	cp dylib/testdylib.exe bin/.
+	rm -rf dylib/libdylib.so
+	rm -rf dylib/testdylib.exe
 
 pluginserver: pluginserver/main.go
-	$(MAKE) -C pluginserver
+	cd pluginserver; \
+		go build -buildmode=plugin -o pluginserver.so
 	cp pluginserver/pluginserver.so bin/.
+	rm -rf pluginserver/pluginserver.so
 
 pluginclient: pluginclient/main.go
-	$(MAKE) -C pluginclient
+	cd pluginclient; \
+		go build -o pluginclient.exe
 	cp pluginclient/pluginclient.exe bin/.
+	rm -rf pluginclient/pluginclient.exe
 
 clean:
 	rm -rf bin
-	$(MAKE) -C dylib clean
-	$(MAKE) -C pluginserver clean
-	$(MAKE) -C pluginclient clean
 
 createdirs:
 	mkdir bin

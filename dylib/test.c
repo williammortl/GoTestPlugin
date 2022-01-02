@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <dlfcn.h>
 #include <assert.h>
+#include <string.h>
 #include "test.h"
 
 // main function
@@ -27,7 +28,7 @@ int main(int argc, char** argv)
             fflush(stdout);
 
             //call function!
-            (*simpleFunc)(message);
+            (*simpleFunc)(STRING_TEST_STRING);
         }
         else
         {
@@ -42,11 +43,11 @@ int main(int argc, char** argv)
             fflush(stdout);
 
             //call function!
-            retValue = (*callbackFunc)(Callback, message);
+            retValue = (*callbackFunc)(AddOneCallback, TEST_VALUE - 1);
             printf("return value (should be %i): %i\r\n", TEST_VALUE, retValue);
 
             // make sure that return value is correct
-            assert(4 == retValue);
+            assert(retValue == TEST_VALUE);
         }
         else
         {
@@ -64,8 +65,9 @@ int main(int argc, char** argv)
 }
 
 // callback function
-long Callback(char* stringToPass)
+long AddOneCallback(long val)
 {
-    printf("in the actual callback function input: %s\r\n", stringToPass);
-    return TEST_VALUE;
+    printf("Called AddOneCallback in test.c\r\n");
+    fflush(stdout);
+    return val + 1;
 }

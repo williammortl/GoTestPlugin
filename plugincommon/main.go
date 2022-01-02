@@ -1,6 +1,6 @@
 package plugincommon
 
 type CallbackFunctions interface {
-	AddOne(val int) int
+	AddOne(val int64) int64
 	AddMessage(message string) string
 }

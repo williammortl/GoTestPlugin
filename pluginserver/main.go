@@ -14,6 +14,8 @@ func main() {
 	log.Print(SimpleTest("internal test"))
 }
 
+var callbacks plugincommon.CallbackFunctions
+
 // simple plugin test
 func SimpleTest(message string) string {
 	var messageOut string = fmt.Sprintf("SimpleTest received this: %s", message)
@@ -21,8 +23,26 @@ func SimpleTest(message string) string {
 	return messageOut
 }
 
-// accepts a callback function and a string to pass to the callback
-func CallbackTest(callbacks plugincommon.CallbackFunctions, val int, message string) (int, string) {
-	log.Print("CallbackTest called")
+// set the callbacks
+func SetCallbacks(callbacksIn plugincommon.CallbackFunctions) {
+	callbacks = callbacksIn
+}
+
+// tests the callback
+func CallbackTest(val int64, message string) (int64, string) {
+	log.Printf("CallbackTest called, received: %d, %s", val, message)
 	return callbacks.AddOne(val), callbacks.AddMessage(message)
+}
+
+// tests calling back into AddOne through C dylib
+func CCallbackTest(val int64) int64 {
+	log.Printf("CCallbackTest called, received: %d", val)
+
+	// simple test
+	CSimpleTest("test from main.go")
+
+	// dynamically provide callback for C
+	retVal := CCallbackCallTest(val)
+
+	return retVal
 }

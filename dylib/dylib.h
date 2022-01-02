@@ -6,6 +6,6 @@
 // exported functions 
 extern void SimpleTest(char* stringToPass);
 
-extern long CallbackTest(long (*callback) (char* string), char* stringToPass);
+extern long CallbackTest(long (*callback) (long val), long val);
 
 #endif
